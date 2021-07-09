@@ -1,0 +1,213 @@
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+
+char a[9]={'1','2','3','4','5','6','7','8','9'};
+int sum=0;
+void gamename()
+{
+    cout<<"\n\n\n\n\n\n\t\t\tTIC TAC TOE\t\t\t\t\t\n\n\n\n";
+}
+void desktop()
+{
+    cout<<"\t\t\t----|----|----"<<endl;
+    cout<<"\t\t\t "<<a[0]<<"  | "  <<a[1] <<"  | " <<a[2] ;
+    cout<<"\n\t\t\t----|----|----"<<endl;
+    cout<<"\t\t\t "<<a[3]<<"  | "  <<a[4] <<"  | " <<a[5] ;
+    cout<<"\n\t\t\t----|----|----"<<endl;
+    cout<<"\t\t\t "<<a[6]<<"  | "  <<a[7] <<"  | " <<a[8] ;
+    cout<<"\n\t\t\t----|----|----"<<endl;
+    cout<<endl<<endl;
+}
+void playersymbol(string p1,string p2)
+{
+    cout<<"\n"<<endl;
+    cout<<"symbol for "<<p1 << " : X"<<endl;
+    cout<<"symbol for "<<p2 <<"  : 0"<<endl;
+    cout<<"\n"<<endl;
+}
+char game_start()
+{
+    int player;
+    cout<<"\nEnter the player going to start the game!1 or 2"<<endl;
+    cin>>player;
+    if(player==1)
+    {
+        return 'x';
+    }
+    else if(player ==2)
+    {
+        return '0';
+    }
+    else
+    {
+        cout<<"\nEnter either 1 or 2"<<endl;
+        game_start();
+    }
+}
+void check(char p,char s)
+{
+
+    int i=0;
+    for(int i=0;i<=8;i++)
+    {
+        if(a[i]==p)
+        {
+            a[i]=s;
+        }
+    }
+}
+void play(char sym,string p1,string p2)
+{
+
+    char pos;
+
+    if(sym=='x')
+    {
+        position1:
+        cout<<p1<<",Enter your position : ";
+        cin>>pos;
+        if(pos>9 && pos<1)
+        {
+            cout<<"\nInvalid position!"<<endl;
+            goto position1;
+        }
+    }
+    else
+    {
+        position3:
+        cout<<p2<<",Enter your position : ";
+        cin>>pos;
+        if(pos>9 && pos<1)
+        {
+            cout<<"\nInvalid position!"<<endl;
+            goto position3;
+        }
+    }
+    sum++;
+    check(pos,sym);
+}
+
+int end_game()
+{
+    if((a[0]=='x'&& a[1]=='x' && a[2]=='x') || (a[0]=='x' && a[3]=='x' && a[6]=='x') || (a[0]=='x' && a[4]=='x' && a[8]=='x'))
+    {
+        return 100;
+    }
+    else if((a[0]=='0'&& a[1]=='0' && a[2]=='0') || (a[0]=='0' && a[3]=='0' && a[6]=='0') || (a[0]=='0' && a[4]=='0' && a[8]=='0'))
+    {
+        return 200;
+    }
+    else if(a[1]=='x' && a[4] =='x' && a[7]=='x')
+    {
+        return 100;
+    }
+    else if(a[1]=='0' && a[4] =='0' && a[7]=='0')
+    {
+        return 200;
+    }
+    else if((a[2]=='x' && a[5]=='x' && a[8]=='x') || (a[2]=='x' && a[4]=='x' && a[6]=='x'))
+    {
+        return 100;
+    }
+    else if((a[2]=='0' && a[5]=='0' && a[8]=='0') || (a[2]=='0' && a[4]=='0' && a[6]=='0'))
+    {
+        return 200;
+    }
+    else if(a[3]=='x' && a[4]=='x' && a[5]=='x')
+    {
+        return 100;
+    }
+    else if(a[3]=='0' && a[4]=='0' && a[5]=='0')
+    {
+        return 200;
+    }
+    else if(a[6]=='x' && a[7]=='x' && a[8]=='x')
+    {
+        return 100;
+    }
+    else if(a[6]=='0' && a[7]=='0' && a[8]=='0')
+    {
+        return 200;
+    }
+
+    return 0;
+
+
+}
+
+int main()
+{
+    label10:
+    string p1,p2;
+    int i=1;
+    gamename();
+    desktop();
+    cout<<"\nEnter players name :"<<endl;
+    cout<<"Player 1 : ";
+    cin>>p1;
+    cout<<"Player 2 ";
+    cin>>p2;
+    playersymbol(p1,p2);
+    char S= game_start();
+    play(S,p1,p2);
+    label:
+    system("CLS");
+    desktop();
+    i++;
+    if(S=='x')
+    {
+        S='0';
+    }
+    else if(S=='0')
+    {
+        S='x';
+    }
+    play(S,p1,p2);
+
+    int k=end_game();
+    system("CLS");
+    desktop();
+    if(sum<9)
+    {
+        if(k==100 )
+        {
+            cout<<p1 <<" ,you win the match!"<<endl;
+            sum=0;
+        }
+        else if(k==200)
+        {
+            cout<<p2<<" ,you win the match!"<<endl;
+            sum=0;
+        }
+        else
+        {
+            goto label;
+        }
+    }
+    else
+    {
+        cout<<"\nGame DRAW!"<<endl;
+        sum=0;
+    }
+    char ch;
+    cout<<"\nDo you want to restart the game? Enter y for YES ";
+    cin>>ch;
+
+    if(ch=='Y' || ch=='y')
+    {
+        a[0]='1';
+        a[1]='2';
+        a[2]='3';
+        a[3]='4';
+        a[4]='5';
+        a[5]='6';
+        a[6]='7';
+        a[7]='8';
+        a[8]='9';
+
+
+        goto label10;
+    }
+    return 0;
+}
